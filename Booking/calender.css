@@ -1,0 +1,89 @@
+/* --- Base Styles --- */
+body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f9; }
+
+/* --- Table & Calendar Scroll (Mobile Friendly) --- */
+.table-container { 
+    max-height: 450px; 
+    overflow: auto; 
+    border: 1px solid #ddd;
+    margin: 10px auto;
+    width: 100%;
+    max-width: 1000px;
+    background: white;
+}
+table { width: 100%; border-collapse: collapse; min-width: 700px; }
+
+/* --- Headers & Sticky Rows --- */
+#header-days th { background-color: #007bff; color: white; position: sticky; top: 0; z-index: 20; padding: 12px; }
+#header-dates th { background-color: #f8f9fa; color: #333; position: sticky; top: 41px; z-index: 15; font-size: 0.85em; padding: 8px; border: 1px solid #dee2e6; }
+.time-label { position: sticky; left: 0; background: #fff; z-index: 10; font-weight: bold; width: 70px; border-right: 2px solid #ddd; }
+td, th { border: 1px solid #e9ecef; text-align: center; height: 35px; }
+
+/* --- Slot States --- */
+.slot { background-color: #f1fffb; cursor: pointer; }
+.slot.selected { background-color: #28a745 !important; color: white; }
+.slot.booked { background-color: #f56565 !important; cursor: not-allowed; pointer-events: none; }
+
+.summary-table-wrapper {
+    width: 100%;            /* Ensure it takes full width of the parent */
+    overflow-x: auto;       /* Enable horizontal scrollbar if table is too wide */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
+    margin-bottom: 15px;
+    border-radius: 8px;     /* Optional: matches your card design */
+}
+
+#summary-table {
+    width: 100%;
+    min-width: 500px;       /* Forces the scroll to appear on very small screens */
+    border-collapse: collapse;
+    white-space: nowrap;    /* Prevents text from wrapping into awkward lines */
+}
+
+#summary-table th, #summary-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+@media (max-width: 600px) {
+    .summary-table-wrapper {
+        border: 1px solid #e2e8f0;
+        background: linear-gradient(to right, white 30%, rgba(255,255,255,0)), 
+                    linear-gradient(to right, rgba(255,255,255,0), white 70%) 100% 0, 
+                    radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.2), rgba(0,0,0,0)), 
+                    radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.2), rgba(0,0,0,0)) 100% 0;
+        background-repeat: no-repeat;
+        background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+        background-attachment: local, local, scroll, scroll;
+    }
+}
+
+/* --- Form Styling --- */
+.summary-section { width: 100%; max-width: 1000px; margin: 20px auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); box-sizing: border-box; text-align: left; }
+.form-divider { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
+.client-form h3 { margin-bottom: 20px; color: #051a35; border-left: 4px solid #007bff; padding-left: 10px; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #444; }
+.form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
+.form-row { display: flex; gap: 15px; flex-wrap: wrap; }
+.form-row .form-group { flex: 1; min-width: 250px; }
+
+/* --- Buttons --- */
+.calendar-footer { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
+.nav-btn { background: #051a35; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+.today-btn { background: #6c757d; }
+.reset-btn { background: #dc3545; }
+.request-btn { margin-top: 20px; margin-bottom: 20px; padding: 15px; background: #ccc; border: none; color: white; border-radius: 4px; width: 100%; font-size: 1.1rem; font-weight: bold; transition: 0.3s; }
+.request-btn.active { background: #28a745; cursor: pointer; }
+
+
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #051a35;
+  color: white;
+  text-align: center;
+}

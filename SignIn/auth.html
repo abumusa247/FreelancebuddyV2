@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Freelance Buddy</title>
+    <link rel="stylesheet" href="calender.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <h1>Freelance Buddy</h1>
+        </div>
+    </nav>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <h2 id="auth-title">Welcome</h2>
+            <p id="auth-subtitle">Please enter your details to continue.</p>
+
+            <form id="auth-form">
+                <div class="input-group" id="name-group" style="display: none;">
+                    <label>Full Name</label>
+                    <input type="text" id="user-name" placeholder="John Doe">
+                </div>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="user-email" placeholder="email@example.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="user-password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" id="submit-btn" class="auth-btn">Sign In</button>
+
+                <div class="divider"><span>OR</span></div>
+
+                <button type="button" id="guest-btn" class="guest-btn">
+                    Log in as Guest
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p id="toggle-text">Don't have an account? <a href="#" id="toggle-auth">Register here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager | Freelance Buddy</title>
+    <link rel="stylesheet" href="/booking/calender.css">
+    <link rel="stylesheet" href="appointments.css">
+    <link rel="stylesheet" href="/shared/include.css">
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <!-- JavaScript for menu toggle -->
+    <script>
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
+
+
+    <div class="dashboard-wrapper">
+        <div class="header-flex">
+            <h2>Appointment Dashboard</h2>
+            <div class="tab-header">
+                <button class="tab-btn active" onclick="switchTab('Pending')">Pending</button>
+                <button class="tab-btn" onclick="switchTab('Confirmed')">Confirmed</button>
+                <button class="tab-btn" onclick="switchTab('Completed')">Completed</button>
+            </div>
+        </div>
+
+        <div id="appointments-grid"></div>
+
+        <div id="no-data-msg" style="display:none; text-align:center; padding: 60px;">
+            <p style="color: #64748b; font-size: 1.1rem;">No appointments found in this category.</p>
+        </div>
+    </div>
+
+    <script src="view-appointments.js"></script>
+    <script src="/shared/include.js"></script>
+
+    <footer>
+        <p>&copy; 2025 Freelance Buddy. All rights reserved.</p>
+    </footer>
+</body>
+
+
+</html>
