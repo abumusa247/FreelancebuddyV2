@@ -194,27 +194,49 @@ function handleFormSubmit(e) {
     e.preventDefault();
     if (!selection.dayKey) return;
 
+    // 1. Get current user info to attach their ID
+    const userJson = localStorage.getItem('currentUser');
+    const user = userJson ? JSON.parse(userJson) : null;
+
+    if (!user) {
+        alert("Session expired. Please log in again.");
+        window.location.href = '../SignIn/auth.html';
+        return;
+    }
+
     const newBooking = {
+        appointmentId: Date.now().toString(), // Unique ID for this specific booking
+        userId: user.id,                      // THIS IS THE KEY: identifies the owner
         slots: [],
         clientName: document.getElementById('client-name').value,
         clientPhone: document.getElementById('client-phone').value,
         clientEmail: document.getElementById('client-email').value,
         clientDesc: document.getElementById('client-desc').value,
         status: 'Pending',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        // Store display details for the table
+        date: selection.dayKey,
+        startTime: hours[selection.startIdx],
+        endTime: hours[selection.endIdx + 1] || '23:00',
+        duration: (selection.endIdx - selection.startIdx + 1) * 0.5
     };
 
     for (let i = selection.startIdx; i <= selection.endIdx; i++) {
         newBooking.slots.push(i);
     }
 
+    // 2. Save into the global 'confirmedBookings' object
     bookedSlots[selection.dayKey] = newBooking;
     localStorage.setItem('confirmedBookings', JSON.stringify(bookedSlots));
     
     selection = { dayKey: null, startIdx: null, endIdx: null };
     e.target.reset();
     renderAll();
+    
+    // 3. After saving, we trigger the table refresh
+    renderAppointmentTable(); 
     alert("Appointment saved successfully!");
 }
+
 
 init();
