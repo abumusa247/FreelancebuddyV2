@@ -4,7 +4,7 @@
 
   if (!userJson) {
     // If someone lands on the home page but isn't logged in, send them to Sign In
-    window.location.href = "/SignIn/auth.html";
+    window.location.href = "index.html";
     return;
   }
 
@@ -18,7 +18,7 @@
 function handleLogout() {
   if (confirm("Are you sure you want to log out?")) {
     localStorage.removeItem("currentUser");
-    window.location.href = "../SignIn/auth.html";
+    window.location.href = "/signin/auth.html";
   }
 }
 
@@ -34,3 +34,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
