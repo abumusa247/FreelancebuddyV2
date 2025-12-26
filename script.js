@@ -2,9 +2,9 @@
   const userJson = localStorage.getItem("currentUser");
   const nameDisplay = document.getElementById("user-display-name");
 
-  /*if (!userJson) {
+  if (!userJson) {
     // If someone lands on the home page but isn't logged in, send them to Sign In
-    window.location.href = "index.html";
+    window.location.href = "/signin/auth.html";
     return;
   }
 
@@ -14,7 +14,7 @@
     nameDisplay.innerText = user.isGuest ? `Guest: ${user.id}` : user.name;
   }
 })();
-*/
+
 
 function handleLogout() {
   if (confirm("Are you sure you want to log out?")) {
@@ -35,5 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
 
 
