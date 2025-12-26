@@ -15,6 +15,30 @@ const userSession = {
 };
 localStorage.setItem('currentUser', JSON.stringify(userSession));
 
+// Example Sign-In Function
+function handleLogin(email, password) {
+    // ... your validation logic ...
+    const user = {
+        id: email, // Use email as the unique ID
+        name: email.split('@')[0], // Use part of email as a temporary name
+        role: 'user',
+        isGuest: false
+    };
+    localStorage.setItem('currentUser', JSON.stringify(user));
+}
+
+// Example Guest Function
+function handleGuestLogin() {
+    const guestId = "Guest_" + Math.floor(Math.random() * 10000);
+    const user = {
+        id: guestId, // Use the generated string as the unique ID
+        name: "Guest User",
+        role: 'user',
+        isGuest: true
+    };
+    localStorage.setItem('currentUser', JSON.stringify(user));
+}
+
 // Switch between Login and Register
 toggleBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -101,6 +125,7 @@ function generateGuestId() {
 // --- Keep existing Login/Register logic below ---
 
 // ... (Your previous authForm.onsubmit code)
+
 
 
 
