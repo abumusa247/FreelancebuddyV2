@@ -55,10 +55,20 @@ function renderAppointments() {
     const msg = document.getElementById('no-data-msg');
     const bookings = JSON.parse(localStorage.getItem('confirmedBookings')) || {};
     
-    // Filter keys based on the active tab
+    // 1. Identify the Current User
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user) return;
+
+    // 2. FILTER: Only show what the user is allowed to see
     const filteredKeys = Object.keys(bookings).filter(key => {
-        const status = bookings[key].status || 'Pending';
-        return status === currentTab;
+        const entry = bookings[key];
+        const statusMatch = (entry.status || 'Pending') === currentTab;
+        
+        // ADMIN sees all matching the tab status
+        if (user.role === 'admin') return statusMatch;
+        
+        // USER sees only if the status matches AND they own the record
+        return statusMatch && entry.userId === user.id;
     });
 
     if (filteredKeys.length === 0) {
@@ -70,31 +80,37 @@ function renderAppointments() {
     msg.style.display = 'none';
     grid.innerHTML = '';
 
-    // Sort Newest to Oldest
     filteredKeys.sort().reverse().forEach(key => {
         const entry = bookings[key];
         const card = document.createElement('div');
         card.className = 'appointment-card';
         
-        // Date Formatting
+        // ... (Date Formatting logic stays same) ...
         const parts = key.split('-');
         const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
         const dateStr = dateObj.toLocaleDateString('en-US', { 
             weekday: 'short', month: 'short', day: 'numeric' 
         });
-
         const startIdx = Math.min(...entry.slots);
         const endIdx = Math.max(...entry.slots);
 
-        // Define Action Button based on Tab
-        let actionButton = '';
-        if (currentTab === 'Pending') {
-            actionButton = `<button class="btn-confirm" onclick="updateStatus('${key}', 'Confirmed')">Confirm</button>`;
-        } else if (currentTab === 'Confirmed') {
-            actionButton = `<button class="btn-complete" onclick="updateStatus('${key}', 'Completed')">Complete</button>`;
-        } else {
-            actionButton = `<div class="completed-tag">✔️ Finished</div>`;
+        // 3. ADMIN-ONLY ACTIONS: Define buttons only if user.role is 'admin'
+        let adminActions = '';
+        if (user.role === 'admin') {
+            if (currentTab === 'Pending') {
+                adminActions = `<button class="btn-confirm" onclick="updateStatus('${key}', 'Confirmed')">Confirm</button>`;
+            } else if (currentTab === 'Confirmed') {
+                adminActions = `<button class="btn-complete" onclick="updateStatus('${key}', 'Completed')">Complete</button>`;
+            }
         }
+
+        // 4. DELETE Logic: Admin can delete anything, Users usually can't (or only their own)
+        const deleteButton = (user.role === 'admin') 
+            ? `<button class="btn-delete" onclick="deleteBooking('${key}')">Delete</button>` 
+            : '';
+
+        // 5. STATUS TAG: Shown for Users since they can't click buttons
+        const statusTag = (currentTab === 'Completed') ? `<div class="completed-tag">✔️ Finished</div>` : `<div class="status-label">${currentTab}</div>`;
 
         card.innerHTML = `
             <div class="card-header">
@@ -105,10 +121,11 @@ function renderAppointments() {
                 <h3>${entry.clientName}</h3>
                 <p class="client-info">📧 ${entry.clientEmail} | 📞 ${entry.clientPhone}</p>
                 <p class="client-desc">"${entry.clientDesc || 'No project notes.'}"</p>
+                ${user.role === 'admin' ? `<p class="owner-id">User ID: ${entry.userId}</p>` : ''}
             </div>
             <div class="card-footer">
-                ${actionButton}
-                <button class="btn-delete" onclick="deleteBooking('${key}')">Delete</button>
+                ${user.role === 'admin' ? adminActions : statusTag}
+                ${deleteButton}
             </div>
         `;
         grid.appendChild(card);
@@ -140,4 +157,5 @@ function deleteBooking(key) {
 }
 
 // Initial Load
+
 document.addEventListener('DOMContentLoaded', renderAppointments);
