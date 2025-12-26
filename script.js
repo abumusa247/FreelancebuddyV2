@@ -4,7 +4,7 @@
 
   if (!userJson) {
     // If someone lands on the home page but isn't logged in, send them to Sign In
-    window.location.href = "../SignIn/auth.html";
+    window.location.href = "/SignIn/auth.html";
     return;
   }
 
@@ -32,4 +32,5 @@ document.addEventListener('DOMContentLoaded', function() {
             menu.classList.toggle('active');
         };
     }
+
 });
