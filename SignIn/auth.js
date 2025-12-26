@@ -7,6 +7,14 @@ const authTitle = document.getElementById('auth-title');
 const submitBtn = document.getElementById('submit-btn');
 const toggleText = document.getElementById('toggle-text');
 
+// Example: Setting an admin during login
+const userSession = {
+    id: "U123",
+    name: "Admin User",
+    role: "admin" // or "customer"
+};
+localStorage.setItem('currentUser', JSON.stringify(userSession));
+
 // Switch between Login and Register
 toggleBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -93,6 +101,7 @@ function generateGuestId() {
 // --- Keep existing Login/Register logic below ---
 
 // ... (Your previous authForm.onsubmit code)
+
 
 
 
